@@ -28,6 +28,10 @@ namespace _2015maj
 
             Console.WriteLine("3. feladat:");
             kiir(farkaskeres(adasok), adasok);
+            Console.WriteLine(Environment.NewLine);
+
+            Console.WriteLine("4. feladat:");
+            kiir(napossz(adasok));
             Console.WriteLine();
 
             Console.ReadKey();
@@ -89,6 +93,24 @@ namespace _2015maj
                 Console.CursorLeft = x + 7;
                 Console.CursorTop = y + i + 1;
                 Console.Write(adasok[talalatok[i]].amator);
+            }
+        }
+
+        static int[] napossz(List<adas> adasok)
+        {
+            int[] ossz = new int[11];
+            for (int i = 0; i < adasok.Count; i++)
+            {
+                ossz[adasok[i].nap-1]++;
+            }
+            return ossz;
+        }
+
+        static void kiir(int[] kiirando)
+        {
+            for (int i = 0; i < kiirando.Length; i++)
+            {
+                Console.WriteLine("{0}. nap: {1} amatőr.", i+1, kiirando[i]);
             }
         }
     }
