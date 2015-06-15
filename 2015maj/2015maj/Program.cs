@@ -21,6 +21,11 @@ namespace _2015maj
         static void Main(string[] args)
         {
             List<adas> adasok = beolvas();
+
+            Console.WriteLine("2. feladat:");
+            Console.WriteLine("Az első üzenet rögzítője: " + adasok[0].amator);
+            Console.WriteLine("Az utolsó üzenet röögzítője: " + adasok[adasok.Count-1].amator + Environment.NewLine);
+
             Console.ReadKey();
         }
 
