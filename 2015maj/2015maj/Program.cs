@@ -26,6 +26,10 @@ namespace _2015maj
             Console.WriteLine("Az első üzenet rögzítője: " + adasok[0].amator);
             Console.WriteLine("Az utolsó üzenet röögzítője: " + adasok[adasok.Count-1].amator + Environment.NewLine);
 
+            Console.WriteLine("3. feladat:");
+            kiir(farkaskeres(adasok), adasok);
+            Console.WriteLine();
+
             Console.ReadKey();
         }
 
@@ -52,6 +56,40 @@ namespace _2015maj
                 adasok.Add(sadas);
             }
             return adasok;
+        }
+
+        static List<int> farkaskeres(List<adas> adasok)
+        {
+            List<int> talalatok = new List<int>();
+            for (int i = 0; i < adasok.Count; i++)
+            {
+                if (adasok[i].uzenet.Contains("farkas"))
+                    talalatok.Add(i);
+            }
+            return talalatok;
+        }
+
+        static void kiir(List<int> talalatok, List<adas> adasok)
+        {
+            int x = Console.CursorLeft;
+            int y = Console.CursorTop;
+
+            Console.Write("Nap");
+
+            Console.CursorLeft = x + 7;
+            Console.CursorTop = y;
+            Console.Write("Amatőr");
+
+            for (int i = 0; i < talalatok.Count; i++)
+            {
+                Console.CursorLeft = x;
+                Console.CursorTop = y + i + 1;
+                Console.Write(adasok[talalatok[i]].nap);
+
+                Console.CursorLeft = x + 7;
+                Console.CursorTop = y + i + 1;
+                Console.Write(adasok[talalatok[i]].amator);
+            }
         }
     }
 }
