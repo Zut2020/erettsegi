@@ -20,11 +20,13 @@ namespace _2015maj
 
         static void Main(string[] args)
         {
+            Console.WriteLine();
             List<adas> adasok = beolvas();
+            Console.WriteLine("Bolvasás kész.");
 
             Console.WriteLine("2. feladat:");
             Console.WriteLine("Az első üzenet rögzítője: " + adasok[0].amator);
-            Console.WriteLine("Az utolsó üzenet röögzítője: " + adasok[adasok.Count-1].amator + Environment.NewLine);
+            Console.WriteLine("Az utolsó üzenet röögzítője: " + adasok[adasok.Count - 1].amator + Environment.NewLine);
 
             Console.WriteLine("3. feladat:");
             kiir(farkaskeres(adasok), adasok);
@@ -34,12 +36,18 @@ namespace _2015maj
             kiir(napossz(adasok));
             Console.WriteLine();
 
+            Console.WriteLine("5. feladat:");
+            kiir(helyreallit(adasok));
+            Console.WriteLine("Kiírás kész.");
+
+            
+
             Console.ReadKey();
         }
 
         static List<adas> beolvas()
         {
-            
+
             List<adas> adasok = new List<adas>();
             FileStream f = new FileStream(fajlhely, FileMode.Open);
             StreamReader sr = new StreamReader(f);
@@ -59,6 +67,8 @@ namespace _2015maj
                 i++;
                 adasok.Add(sadas);
             }
+            sr.Close();
+            f.Close();
             return adasok;
         }
 
@@ -101,7 +111,7 @@ namespace _2015maj
             int[] ossz = new int[11];
             for (int i = 0; i < adasok.Count; i++)
             {
-                ossz[adasok[i].nap-1]++;
+                ossz[adasok[i].nap - 1]++;
             }
             return ossz;
         }
@@ -110,8 +120,54 @@ namespace _2015maj
         {
             for (int i = 0; i < kiirando.Length; i++)
             {
-                Console.WriteLine("{0}. nap: {1} amatőr.", i+1, kiirando[i]);
+                Console.WriteLine("{0}. nap: {1} amatőr.", i + 1, kiirando[i]);
             }
+        }
+
+        static string[] helyreallit(List<adas> adasok)
+        {
+            string[] eredmeny = new string[11];
+            List<string>[] uzenetek = new List<string>[11];
+            for (int i = 0; i < 11; i++)
+            {
+                uzenetek[i] = new List<string>();
+            }
+
+            for (int i = 0; i < adasok.Count; i++)
+            {
+                uzenetek[adasok[i].nap-1].Add(adasok[i].uzenet);
+            }
+            bool cserelt = false;
+            for (int i = 0; i < uzenetek.Length; i++)
+            {
+                for (int j = 0; j < 90; j++)
+                {
+                    for (int k = 0; k < uzenetek[i].Count; k++)
+                    {
+                        if (uzenetek[i][k][j] != '#' && !cserelt)
+                        {
+                            eredmeny[i] += uzenetek[i][k][j];
+                            cserelt = true;
+                        }
+                    }
+                    if (!cserelt)
+                        eredmeny[i] += '#';
+                    cserelt = false;
+                }
+            }
+            return eredmeny;
+        }
+
+        static void kiir(string[] kiirando)
+        {
+            FileStream f = new FileStream(@"C:\érettségi megoldas\forrasok\adas.txt", FileMode.Create);
+            StreamWriter sw = new StreamWriter(f);
+            for (int i = 0; i < kiirando.Length; i++)
+            {
+                sw.WriteLine(kiirando[i]);
+            }
+            sw.Close();
+            f.Close();
         }
     }
 }
